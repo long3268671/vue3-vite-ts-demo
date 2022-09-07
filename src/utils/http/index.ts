@@ -1,5 +1,6 @@
 import Axios from 'axios';
-const baseURL = '';
+const baseURL= import.meta.env.VITE_APP_BASE_API as string;
+console.log('baseURL',baseURL)
 const axios = Axios.create({
   baseURL, // 基础 url
   timeout: 10000 // 超时 10s

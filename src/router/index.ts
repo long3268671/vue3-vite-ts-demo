@@ -1,30 +1,14 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import Home from '@/views/Home.vue';
-
-const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  // TODO: 填写其他页面路由内容
-  {
-    // 匹配全部其他内容
-    path: '/:pathMatch(.*)*',
-    component: () => import(/* webpackChunkName: "404" */ '@/views/404.vue')
-  }
-];
-
+import { createRouter, createWebHistory } from 'vue-router'
+import routers from './config'
 const router = createRouter({
-  history: createWebHistory(),
-  routes
-});
-
+    history: createWebHistory(),
+    routes: routers
+})
 // 路由拦截器
 router.beforeEach((to, from, next) => {
-  // TODO: 自定义拦截内容
-
-  next();
-});
-
-export default router;
+    // TODO: 自定义拦截内容
+    console.log(to, from, next)
+    next();
+  });
+  
+export default router

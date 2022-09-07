@@ -1,0 +1,1 @@
+<template> 这是user.vue </template>
