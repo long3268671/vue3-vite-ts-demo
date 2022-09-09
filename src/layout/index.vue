@@ -6,21 +6,10 @@
     @collapse="onCollapse"
     @breakpoint="onBreakpoint"
   >
-    <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
+    <a-layout-sider width="250" v-model:collapsed="collapsed"  :trigger="null" collapsible>
       <div class="logo" />
-      <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
-        <a-menu-item key="1" class="!mt-0">
-          <user-outlined />
-          <span>nav 1</span>
-        </a-menu-item>
-        <a-menu-item key="2">
-          <video-camera-outlined />
-          <span>nav 2</span>
-        </a-menu-item>
-        <a-menu-item key="3">
-          <upload-outlined />
-          <span>nav 3111</span>
-        </a-menu-item>
+      <a-menu v-model:selectedKeys="selectedKeys" theme="dark"  mode="inline">
+        <menu-list :menuList="menuList"></menu-list>
       </a-menu>
     </a-layout-sider>
     <a-layout>
@@ -50,7 +39,9 @@ import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
 } from "@ant-design/icons-vue";
+import { userStore } from "@/store/modules/user";
 import { defineComponent, ref } from "vue";
+import menuList from "@/components/menuList.vue"
 export default defineComponent({
   components: {
     UserOutlined,
@@ -58,8 +49,12 @@ export default defineComponent({
     UploadOutlined,
     MenuUnfoldOutlined,
     MenuFoldOutlined,
+    menuList
   },
   setup() {
+    let user_store = userStore();
+    const menuList = user_store.MenuList;
+    console.log('menuList',menuList)
     const onCollapse = ()=>{
 
     }
@@ -67,15 +62,16 @@ export default defineComponent({
 
     }
     return {
-      selectedKeys: ref<string[]>(["1"]),
+      selectedKeys: ref<string[]>(["homeIndex"]),
       collapsed: ref<boolean>(false),
       onCollapse,
-      onBreakpoint
+      onBreakpoint,
+      menuList
     };
   },
 });
 </script>
-<style>
+<style type="text/css" scoped>
 #components-layout-demo-custom-trigger {
   min-height: 100vh;
 }

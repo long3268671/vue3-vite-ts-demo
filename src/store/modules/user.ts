@@ -1,31 +1,53 @@
 import { defineStore } from 'pinia'
-
+import { getRouter } from '@/api/router'
+import {_addRoutes} from '@/router/resolveRouter.ts'
+import routers  from '@/router/config'
 interface userStateType{
-    userName:string,
-    tel:string|number,
-    passWord:string|number,
-    userInfo?:Object
+    userInfo:{
+        name?:string,
+        tel?:string|number,
+        passWord?:string|number,
+    },
+    token:string,
+    MenuList:any[]
 }
 
-export  const userStore = defineStore('user',{
+export const userStore = defineStore('user',{
     state: ():userStateType=>{
         return {
-            userName:'张三',
-            tel:'13838384388',
-            passWord:'123456'
+            userInfo:JSON.parse(localStorage.getItem('userInfo'))||{},
+            token:localStorage.getItem('token')||'',
+            MenuList:[]
         }
     },
     getters: {
-        tonken:(state)=>{
-            console.log(state);
-            return '123456789'
-        }
     },
     actions:{
         getUser(){
             return {
-                userName:this.userName
+                userInfo:this.userInfo,
+                token:this.token
             }
+        },
+        setRouter(){
+            return new Promise(resolve => {
+                const getR = this.MenuList;
+                if(getR.length){
+                    _addRoutes(getR)
+                    resolve(true)
+                }else{
+                    getRouter().then(res=>{
+                        if(res.code == 200) {
+                            let defaultRouters = routers.filter((route)=>route.name == 'home');
+                            console.log('defaultRouters',defaultRouters)
+                            this.MenuList = [...defaultRouters[0].children,...res.data]
+                            _addRoutes(res.data)
+                            resolve(true)
+                        }
+                    })
+                }
+            })
+
         }
     }
 })
