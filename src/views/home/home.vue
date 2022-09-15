@@ -22,6 +22,9 @@
     <br />
     <p>store.count:{{ count }}</p>
     <p>store.msg:{{ msg }}</p>
+    <div class="box">
+      <p class="boxText">111111</p>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -61,3 +64,12 @@ export default defineComponent({
   },
 });
 </script>
+<style  lang="less" scoped>
+  .box{
+    @apply font-bold py-2 px-4 rounded;
+    .boxText{
+      @apply p-0 m-0 text-red-500;
+    }
+  }
+
+</style>
