@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import Axios,{ AxiosRequestConfig } from 'axios';
 const baseURL= import.meta.env.VITE_APP_BASE_API as string;
 console.log('baseURL',baseURL)
 const axios = Axios.create({

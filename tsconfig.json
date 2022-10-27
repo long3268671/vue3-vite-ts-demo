@@ -21,7 +21,8 @@
     // 启用 --strict相当于启用 --noImplicitAny, --noImplicitThis, --alwaysStrict，
     // --strictNullChecks和 --strictFunctionTypes和--strictPropertyInitialization。
     "strict": true,
-
+    "forceConsistentCasingInFileNames": true,
+    "strictFunctionTypes": false,
     // 生成相应的 .map文件。
     "sourceMap": true,
 
@@ -58,7 +59,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-  ],
+, "env.d.ts"  ],
   "references": [{ "path": "./tsconfig.node.json" }],
   "exclude": [
     "node_modules",

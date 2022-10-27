@@ -1,3 +1,4 @@
+import { TO } from '@/typing/http';
 import axios from './index';
 
 /**

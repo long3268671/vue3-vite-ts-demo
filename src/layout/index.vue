@@ -1,99 +1,33 @@
 <template>
-  <a-layout
-    id="components-layout-demo-custom-trigger"
-    breakpoint="lg"
-    collapsed-width="0"
-    @collapse="onCollapse"
-    @breakpoint="onBreakpoint"
-  >
-    <a-layout-sider width="250" v-model:collapsed="collapsed"  :trigger="null" collapsible>
-      <div class="logo" />
-      <a-menu v-model:selectedKeys="selectedKeys" theme="dark"  mode="inline">
-        <menu-list :menuList="menuList"></menu-list>
-      </a-menu>
-    </a-layout-sider>
-    <a-layout>
-      <a-layout-header class="!bg-[#fff] !p-0">
-        <menu-unfold-outlined
-          v-if="collapsed"
-          class="trigger"
-          @click="() => (collapsed = !collapsed)"
-        />
-        <menu-fold-outlined
-          v-else
-          class="trigger"
-          @click="() => (collapsed = !collapsed)"
-        />
-      </a-layout-header>
-      <a-layout-content class="my-24px mx-16px p-24px bg-[#fff] !min-h-280px">
+  <a-layout class="h-screen">
+    <a-layout-header class="!bg-[#fff] border-b-1 !h-48px !leading-48px flex items-center justify-between text-black">
+     <head-vue></head-vue>
+    </a-layout-header>
+    <a-layout-content>
+      <a-layout-content class=" p-24px bg-[#fff] !min-h-full !min-w-1280px">
         <router-view></router-view>
       </a-layout-content>
-    </a-layout>
+    </a-layout-content>
+<!--    <a-layout-footer>Footer</a-layout-footer>-->
   </a-layout>
 </template>
 <script lang="ts">
-import {
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-} from "@ant-design/icons-vue";
+import { defineComponent,ref } from 'vue'
 import { userStore } from "@/store/modules/user";
-import { defineComponent, ref } from "vue";
-import menuList from "@/components/menuList.vue"
+import headVue from './modules/head.vue';
 export default defineComponent({
-  components: {
-    UserOutlined,
-    VideoCameraOutlined,
-    UploadOutlined,
-    MenuUnfoldOutlined,
-    MenuFoldOutlined,
-    menuList
+  components:{
+    headVue
   },
   setup() {
     let user_store = userStore();
-    const menuList = user_store.MenuList;
-    console.log('menuList',menuList)
-    const onCollapse = ()=>{
-
-    }
-    const onBreakpoint = ()=>{
-
-    }
-    return {
-      selectedKeys: ref<string[]>(["homeIndex"]),
-      collapsed: ref<boolean>(false),
-      onCollapse,
-      onBreakpoint,
+    const menuList:any[] = user_store.MenuList;
+    let selectedKeys = ref<string[]>(["homeIndex"])
+    return{
+      selectedKeys,
       menuList
-    };
+    }
   },
-});
+})
 </script>
-<style type="text/css" scoped>
-#components-layout-demo-custom-trigger {
-  min-height: 100vh;
-}
-#components-layout-demo-custom-trigger .trigger {
-  font-size: 18px;
-  line-height: 64px;
-  padding: 0 24px;
-  cursor: pointer;
-  transition: color 0.3s;
-}
 
-#components-layout-demo-custom-trigger .trigger:hover {
-  color: #1890ff;
-}
-
-#components-layout-demo-custom-trigger .logo {
-  height: 32px;
-  background: rgba(255, 255, 255, 0.3);
-  margin: 16px;
-}
-
-.site-layout .site-layout-background {
-  background: #fff;
-}
-</style>
